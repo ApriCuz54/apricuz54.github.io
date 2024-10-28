@@ -3,5 +3,9 @@ console.log("Welcome to Aditya Chatterjee's Project Showcase!");
 
 function toggleContent(id) {
     const content = document.getElementById(id);
-    content.style.display = content.style.display === "none" || content.style.display === "" ? "block" : "none";
+    if (content.classList.contains("open")) {
+        content.classList.remove("open");
+    } else {
+        content.classList.add("open");
+    }
 }
