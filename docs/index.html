@@ -10,20 +10,45 @@
 <body>
     <header>
         <div class="wallpaper">
-            <img src="wallpaper.png" alt="Wallpaper">
+            <img src="https://images.unsplash.com/photo-1500740516770-92bd004b996e?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Moody cloudy sky">
         </div>
+        <canvas id="lightning" aria-hidden="true"></canvas>
         <div class="header-text">
             <h1>Aditya Chatterjee's Project Showcase</h1>
+            <div class="hero-accent"></div>
             <p>Explore my projects and contributions.</p>
+            <ul class="hero-tags" aria-label="Interests">
+                <li>LLMs</li>
+                <li>Computer Vision</li>
+                <li>Optimization</li>
+                <li>NPUs</li>
+            </ul>
         </div>
     </header>
+
+    <div class="divider-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false">
+            <path d="M0,32L80,48C160,64,320,96,480,96C640,96,800,64,960,58.7C1120,53,1280,75,1360,85.3L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z" fill="url(#g)" opacity="0.9"></path>
+            <defs>
+                <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#22d3ee"/>
+                    <stop offset="50%" stop-color="#60a5fa"/>
+                    <stop offset="100%" stop-color="#a78bfa"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    
+    
+    <div class="divider-aurora" aria-hidden="true"></div>
 
     <section class="about-me">
         <div class="about-content">
             <img src="dp.png" alt="Aditya Chatterjee" class="profile-pic">
             <div class="about-text">
                 <h2>About Me</h2>
-                <p>Hello! I'm Aditya Chatterjee, an enthusiastic problem solver with a strong passion for Machine Learning and Artificial Intelligence. I'm currently pursuing my B.E. (Hons.) in Computer Science at BITS Pilani, Goa Campus, and have worked on several exciting projects in the field of deep learning, image processing, and handwritten recognition.</p>
+                <p>Hello! I'm Aditya Chatterjee, an enthusiastic problem solver with a strong passion for Machine Learning and Artificial Intelligence. I'm currently pursuing my B.E. in Computer Science at BITS Pilani, Goa Campus, and have worked on several exciting projects in the field of deep learning, image processing, and handwritten recognition.</p>
                 <p>I've interned at AMD, where I focused on optimizing deep learning models for Ryzen AI devices, enhancing performance and efficiency. Previously, I also worked as a Business Growth Intern at Ultrahive Healthcare, where I contributed to go-to-market strategies and digital marketing campaigns.</p>
                 <p>In my free time, I enjoy playing basketball as part of the BITS Goa team and I have also achieved Grade 8 certification in Western Classical Guitar.</p>
                 <p>Feel free to explore my projects below and check out my GitHub for more information!</p>
@@ -42,6 +67,7 @@
                 <p>To meet the goals, I developed a production-level package designed to optimize LLMs by pre-processing model layers and formatting data for efficient NPU deployment. This package, which was sent to customers, delivered up to a 300% improvement in model initialization speed on NPUs. This efficiency gain allowed for reduced CPU utilization, making the models more power-efficient by allowing the CPU to handle other tasks simultaneously.</p>
                 <p>In addition to building the package, I developed a comprehensive set of testing tools to ensure these optimizations were stable across different NPU configurations, preventing performance regressions. I also implemented a graph comparison script using graph isomorphism techniques, which expedited the process of checking compatibility with frequently updated LLM versions. This script saved the team approximately five man-hours each week and streamlined the deployment process, ensuring that AMD’s global Copilot+ deployment remained robust and performant.</p>
                 <p>Through these contributions, I directly supported AMD's mission to optimize AI solutions for global deployment, demonstrating the importance of efficient, production-level code in high-performance environments.</p>
+            </div>
         </article>
         
         <article class="internship">
@@ -55,46 +81,47 @@
             </div>
         </article>
 
-            </div>
-        </article>
+        
     </section>
-    
+
+    <div class="divider-aurora" aria-hidden="true"></div>
 
     <section class="projects">
+        <h2 class="section-title">Projects</h2>
         <article class="project">
-            <h2>Project 1: Early Exploration of ML</h2>
-            <p>This is a collection of my early projects exploring the fundamentals of Machine Learning. The projects focus on building a solid understanding of basic ML concepts and applying them to simple datasets.</p>
-            <a href="https://github.com/ApriCuz54/EarlyML" class="project-link" target="_blank">GitHub Link</a>
+            <h2>LLM Optimisations</h2>
+            <p>This project contains my work on optimizing Large Language Models (LLMs), focusing on improving efficiency, reducing computational load, and making fine-tuning more accessible for diverse applications.</p>
+            <a href="https://github.com/ApriCuz54/LLM_Optimization" class="project-link" target="_blank">GitHub Link</a>
         </article>
 
         <article class="project">
-            <h2>Project 2: Handwriting Recognition</h2>
-            <p>This project involved developing a system to convert handwritten text into digital text using Machine Learning techniques such as LSTMs, RNNs, and CNNs, achieving a 79% word recognition accuracy.</p>
-            <a href="https://github.com/ApriCuz54/HandwritingRecognition" class="project-link" target="_blank">GitHub Link</a>
-        </article>
-
-        <article class="project">
-            <h2>Project 3: Brain Inspired Deep Learning</h2>
-            <p>These projects were part of the Brain Inspired Deep Learning course. I explore mathematical models and concepts inspired by both neuroscience and chaos theory, focusing on how complex systems behave over time.</p>
-            <a href="https://github.com/ApriCuz54/BIDL_projects" class="project-link" target="_blank">GitHub Link</a>
-        </article>
-
-        <article class="project">
-            <h2>Project 4: Image Compression</h2>
-            <p>This project demonstrates how Singular Value Decomposition (SVD) can be applied to compress images by reducing the rank of their matrix representation.</p>
-            <a href="https://github.com/ApriCuz54/SVD" class="project-link" target="_blank">GitHub Link</a>
-        </article>
-
-        <article class="project">
-            <h2>Project 5: Dementia Detection</h2>
+            <h2>Dementia Detection</h2>
             <p>This project aims to improve the early detection of dementia using recent advancements in machine learning, particularly large language models (LLMs).</p>
             <a href="https://github.com/ApriCuz54/DementiaDetection" class="project-link" target="_blank">GitHub Link</a>
         </article>
 
         <article class="project">
-            <h2>Project 6: LLM Optimisations</h2>
-            <p>This project contains my work on optimizing Large Language Models (LLMs), focusing on improving efficiency, reducing computational load, and making fine-tuning more accessible for diverse applications.</p>
-            <a href="https://github.com/ApriCuz54/LLM_Optimization" class="project-link" target="_blank">GitHub Link</a>
+            <h2>Image Compression</h2>
+            <p>This project demonstrates how Singular Value Decomposition (SVD) can be applied to compress images by reducing the rank of their matrix representation.</p>
+            <a href="https://github.com/ApriCuz54/SVD" class="project-link" target="_blank">GitHub Link</a>
+        </article>
+
+        <article class="project">
+            <h2>Brain Inspired Deep Learning</h2>
+            <p>These projects were part of the Brain Inspired Deep Learning course. I explore mathematical models and concepts inspired by both neuroscience and chaos theory, focusing on how complex systems behave over time.</p>
+            <a href="https://github.com/ApriCuz54/BIDL_projects" class="project-link" target="_blank">GitHub Link</a>
+        </article>
+
+        <article class="project">
+            <h2>Handwriting Recognition</h2>
+            <p>This project involved developing a system to convert handwritten text into digital text using Machine Learning techniques such as LSTMs, RNNs, and CNNs, achieving a 79% word recognition accuracy.</p>
+            <a href="https://github.com/ApriCuz54/HandwritingRecognition" class="project-link" target="_blank">GitHub Link</a>
+        </article>
+
+        <article class="project">
+            <h2>Early Exploration of ML</h2>
+            <p>This is a collection of my early projects exploring the fundamentals of Machine Learning. The projects focus on building a solid understanding of basic ML concepts and applying them to simple datasets.</p>
+            <a href="https://github.com/ApriCuz54/EarlyML" class="project-link" target="_blank">GitHub Link</a>
         </article>
     </section>
     
