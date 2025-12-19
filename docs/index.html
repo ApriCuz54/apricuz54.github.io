@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aditya Chatterjee's Project Showcase</title>
+    <title>Aditya Chatterjee - ML Engineer & Researcher</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,9 +14,12 @@
         </div>
         <canvas id="lightning" aria-hidden="true"></canvas>
         <div class="header-text">
-            <h1>Aditya Chatterjee's Project Showcase</h1>
+            <h1>Aditya Chatterjee</h1>
             <div class="hero-accent"></div>
-            <p>Explore my projects and contributions.</p>
+            <p>ML Engineer & Researcher | Northeastern University</p>
+            <div class="hero-words">
+                📧 adi.chatterjee@icloud.com | 📱 (857) 284-2775
+            </div>
         </div>
     </header>
 
@@ -33,8 +36,6 @@
         </svg>
     </div>
 
-    
-    
     <div class="divider-aurora" aria-hidden="true"></div>
 
     <section class="about-me">
@@ -42,13 +43,102 @@
             <img src="dp.png" alt="Aditya Chatterjee" class="profile-pic">
             <div class="about-text">
                 <h2>About Me</h2>
-                <p>Hello! I'm Aditya Chatterjee, an enthusiastic problem solver with a strong passion for Machine Learning and Artificial Intelligence. I'm currently pursuing my B.E. in Computer Science at BITS Pilani, Goa Campus, and have worked on several exciting projects in the field of deep learning, image processing, and handwritten recognition.</p>
-                <p>I've interned at AMD, where I focused on optimizing deep learning models for Ryzen AI devices, enhancing performance and efficiency. Previously, I also worked as a Business Growth Intern at Ultrahive Healthcare, where I contributed to go-to-market strategies and digital marketing campaigns.</p>
-                <p>In my free time, I enjoy playing basketball as part of the BITS Goa team and I have also achieved Grade 8 certification in Western Classical Guitar.</p>
-                <p>Feel free to explore my projects below and check out my GitHub for more information!</p>
+                <p>Hello! I'm Aditya Chatterjee, a Computer Science Master's student at <strong>Northeastern University</strong> (4.0 GPA, graduating May 2027) specializing in machine learning and LLM optimization.</p>
+                
+                <p>I recently completed a co-op at <strong>AMD's AIG AI Solutions Team</strong>, where I optimized large language models for production deployment on NPUs, reducing inference latency by 300%. My <strong>first-author research on cost-aware LLM fine-tuning</strong> has been accepted at <strong>IEEE AIMLSys EDGE-X 2025</strong>.</p>
+                
+                <p>I'm passionate about applied AI research—from building efficient transformer models to exploring the intersection of AI and human behavior. I completed my B.E. in Computer Science at BITS Pilani in 2025, where I took additional psychology courses due to my interest in human-centered AI.</p>
+                
+                <p>In my free time, I enjoy playing basketball and have achieved Grade 8 certification in Western Classical Guitar.</p>
+                
+                <p><strong>Currently seeking Summer 2026 internships in ML Engineering, AI Research, or related roles.</strong></p>
+                
+                <p style="margin-top: 20px;">
+                    <a href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/" target="_blank" style="color: #60a5fa; text-decoration: none; margin-right: 20px;">LinkedIn →</a>
+                    <a href="https://github.com/ApriCuz54" target="_blank" style="color: #60a5fa; text-decoration: none;">GitHub →</a>
+                </p>
             </div>
         </div>
     </section>
+
+    <div class="divider-aurora" aria-hidden="true"></div>
+
+    <section class="internship-experience">
+    <h2>Education</h2>
+    
+    <article class="internship">
+        <h3 class="dropdown-toggle" onclick="toggleContent('northeastern')">Northeastern University</h3>
+        <div id="northeastern" class="dropdown-content">
+            <p><strong>Master of Science in Computer Science</strong> | Expected May 2027 | Boston, MA</p>
+            <p><strong>GPA:</strong> 4.0/4.0</p>
+            <p><strong>Relevant Coursework:</strong> Foundations of Artificial Intelligence (Reinforcement Learning, Search Algorithms, Hidden Markov Models), Programming Design Paradigms, Algorithms</p>
+            <p><strong>Key Projects:</strong> Implemented Q-learning for game AI, built sentiment classifiers using logistic regression, developed semantic parsers for natural language understanding, designed calendar application using MVC architecture with comprehensive event management and scheduling features</p>
+        </div>
+    </article>
+    
+    <article class="internship">
+        <h3 class="dropdown-toggle" onclick="toggleContent('bitspilani')">BITS Pilani – Goa Campus</h3>
+        <div id="bitspilani" class="dropdown-content">
+            <p><strong>Bachelor of Engineering in Computer Science</strong> | Graduated May 2025 | Goa, India</p>
+            <p><strong>GPA:</strong> 7.96/10.0</p>
+            <p><strong>Relevant Coursework:</strong> Artificial Intelligence, Deep Learning, Brain-Inspired Deep Learning, Human-Computer Interaction, Data Structures & Algorithms, Design & Analysis of Algorithms, Computer Networks, Psychology (electives)</p>
+        </div>
+    </article>
+</section>
+
+    <div class="divider-aurora" aria-hidden="true"></div>
+
+    <section class="internship-experience">
+        <h2>Research & Publications</h2>
+        
+        <article class="internship">
+            <h3 class="dropdown-toggle" onclick="toggleContent('research')">Cost-Aware Fine-Tuning for Efficient LLM Adaptation</h3>
+            <div id="research" class="dropdown-content">
+                <p><strong>First Author</strong> | <em>IEEE AIMLSys EDGE-X 2025 (Accepted)</em> | Jan 2025 - June 2025</p>
+                <p><strong>BITS Pilani, Goa Campus</strong></p>
+                
+                <h4 style="color: #60a5fa; margin-top: 15px;">Research Overview</h4>
+                <p>Conducted a comprehensive system-level study addressing one of the most pressing challenges in production LLM deployment: <strong>balancing model performance with computational and financial costs</strong>. This research provides practitioners with actionable, hardware-specific recommendations for efficient fine-tuning across diverse computational environments.</p>
+                
+                <h4 style="color: #60a5fa; margin-top: 15px;">Key Findings & Impact</h4>
+                <ul style="color: var(--muted); margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Identified a dominant fine-tuning strategy:</strong> Freezing all but the top two transformer layers achieves <strong>perfect accuracy (100%)</strong> matching full fine-tuning while training only <strong>9% of parameters</strong> and reducing CPU training time by up to <strong>86%</strong></li>
+                    <li><strong>Multi-hardware benchmark:</strong> Evaluated PEFT methods (LoRA, layer freezing) across CPU, T4, L4, and A100 GPUs, providing the first comprehensive cost-performance analysis across this hardware spectrum</li>
+                    <li><strong>Hyperparameter optimization efficiency:</strong> Demonstrated that Random Search reduces tuning time by <strong>30%</strong> with only marginal performance trade-offs compared to Grid Search</li>
+                    <li><strong>Financial cost analysis:</strong> Quantified real-world cloud deployment costs and introduced "Loss Reduction per Dollar" metric, showing CPU-based freeze strategies deliver <strong>3x better value</strong> than GPU alternatives for budget-constrained scenarios</li>
+                    <li><strong>Production-ready recommendations:</strong> Delivered hardware-specific blueprints enabling practitioners to select optimal configurations based on their primary constraint (speed, budget, or balanced approach)</li>
+                </ul>
+                
+                <h4 style="color: #60a5fa; margin-top: 15px;">Technical Contributions</h4>
+                <ul style="color: var(--muted); margin-left: 20px; line-height: 1.8;">
+                    <li>Benchmarked modern PEFT techniques including LoRA (ranks 4 and 8), BitFit-style approaches, and layer-freezing strategies across multiple model architectures (DistilBERT, BERT, LLaMA-3.2-1B)</li>
+                    <li>Designed multi-stage experimental methodology combining hyperparameter optimization analysis with system-level PEFT benchmarking</li>
+                    <li>Collected fine-grained system metrics: peak GPU memory utilization, real-time GPU usage percentages, gradient norms, and end-to-end training latency</li>
+                    <li>Conducted experiments on diverse NLP tasks: sentiment classification (IMDb, 5K samples) and instruction-following (Alpaca dataset)</li>
+                </ul>
+                
+                <h4 style="color: #60a5fa; margin-top: 15px;">Real-World Impact</h4>
+                <p>This research directly addresses the prohibitive costs of LLM fine-tuning in pay-per-use cloud environments. By demonstrating that simple layer-freezing strategies can match full fine-tuning performance while dramatically reducing computational requirements, this work makes powerful AI more accessible to:</p>
+                <ul style="color: var(--muted); margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Startups and small teams</strong> with limited GPU budgets who can achieve production-quality results on CPUs</li>
+                    <li><strong>Enterprise ML teams</strong> seeking to optimize cloud spending without sacrificing model quality</li>
+                    <li><strong>Academic researchers</strong> who need cost-effective experimentation strategies</li>
+                    <li><strong>Edge AI applications</strong> requiring efficient on-device model adaptation</li>
+                </ul>
+                
+                <h4 style="color: #60a5fa; margin-top: 15px;">Technologies & Methods</h4>
+                <p><strong>Frameworks:</strong> PyTorch, Hugging Face Transformers, LLaMA-Factory, Unsloth</p>
+                <p><strong>PEFT Methods:</strong> LoRA (Low-Rank Adaptation), Layer Freezing, BitFit-style bias tuning</p>
+                <p><strong>Optimization:</strong> Grid Search, Random Search, Bayesian Optimization (Optuna with TPE sampler)</p>
+                <p><strong>Hardware:</strong> NVIDIA A100, L4, T4 GPUs; CPU-based training environments</p>
+                <p><strong>Metrics:</strong> Training time, peak memory usage, GPU utilization, parameter efficiency, cost-per-run analysis</p>
+                
+                <p style="margin-top: 20px;"><a href="https://www.aimlsystems.org/2025/workshop-edge-x/" target="_blank" style="color: #60a5fa;">View Conference Details →</a></p>
+            </div>
+        </article>
+    </section>
+
+    <div class="divider-aurora" aria-hidden="true"></div>
 
     <section class="internship-experience">
         <h2>Internship Experience</h2>
@@ -56,71 +146,68 @@
         <article class="internship">
             <h3 class="dropdown-toggle" onclick="toggleContent('amd')">AMD - AIG AI Solutions</h3>
             <div id="amd" class="dropdown-content">
-                <h3>AMD - AIG AI Solutions</h3>
-                <p>During my internship at AMD, I worked on optimizing large language models (LLMs) to run efficiently on Neural Processing Units (NPUs), with a specific focus on ensuring compatibility with AMD’s RyzenAI chips. My team's primary focus during my team here was enabling Copilot+ on Windows machines globally. This task required an in-depth understanding of LLM architecture and familiarity with machine learning frameworks like ONNX and ONNXRuntime.</p>
-                <p>To meet the goals, I developed a production-level package designed to optimize LLMs by pre-processing model layers and formatting data for efficient NPU deployment. This package, which was sent to customers, delivered up to a 300% improvement in model initialization speed on NPUs. This efficiency gain allowed for reduced CPU utilization, making the models more power-efficient by allowing the CPU to handle other tasks simultaneously.</p>
-                <p>In addition to building the package, I developed a comprehensive set of testing tools to ensure these optimizations were stable across different NPU configurations, preventing performance regressions. I also implemented a graph comparison script using graph isomorphism techniques, which expedited the process of checking compatibility with frequently updated LLM versions. This script saved the team approximately five man-hours each week and streamlined the deployment process, ensuring that AMD’s global Copilot+ deployment remained robust and performant.</p>
-                <p>Through these contributions, I directly supported AMD's mission to optimize AI solutions for global deployment, demonstrating the importance of efficient, production-level code in high-performance environments.</p>
+                <p><strong>Co-op/Intern, AI Solutions Team</strong> | May 2024 - December 2024 | Hyderabad, India</p>
+                <p>During my internship at AMD, I worked on optimizing large language models (LLMs) to run efficiently on Neural Processing Units (NPUs), with a specific focus on ensuring compatibility with AMD's RyzenAI chips. My team's primary focus was enabling Copilot+ on Windows machines globally. This task required an in-depth understanding of LLM architecture and familiarity with machine learning frameworks like ONNX and ONNXRuntime.</p>
+                <p>To meet the goals, I developed a production-level package designed to optimize LLMs by pre-processing model layers and formatting data for efficient NPU deployment. This package, which was sent to customers, delivered up to a <strong>300% improvement in model initialization speed</strong> on NPUs. This efficiency gain allowed for reduced CPU utilization, making the models more power-efficient by allowing the CPU to handle other tasks simultaneously.</p>
+                <p>In addition to building the package, I developed a comprehensive set of testing tools to ensure these optimizations were stable across different NPU configurations, preventing performance regressions. I also implemented a graph comparison script using graph isomorphism techniques, which expedited the process of checking compatibility with frequently updated LLM versions. This script saved the team approximately <strong>five man-hours each week</strong> and streamlined the deployment process, ensuring that AMD's global Copilot+ deployment remained robust and performant.</p>
+                <p><strong>Impact:</strong> Directly supported AMD's mission to optimize AI solutions for global deployment, demonstrating the importance of efficient, production-level code in high-performance environments.</p>
             </div>
         </article>
         
         <article class="internship">
             <h3 class="dropdown-toggle" onclick="toggleContent('ultrahive')">MASTH Ultrahive Healthcare Pvt Ltd</h3>
             <div id="ultrahive" class="dropdown-content">
-                <h3>MASTH Ultrahive Healthcare Pvt Ltd</h3>
+                <p><strong>Business Growth Intern</strong> | 2023 | Remote</p>
                 <p>At MASTH Ultrahive Healthcare Pvt Ltd, a startup dedicated to promoting emotional wellness among teenagers in India, I worked as part of the Business Growth team to build and execute Go-To-Market (GTM) strategies that significantly expanded the startup's online reach and presence. My focus was on raising awareness for mental health in teenagers by creating a strong digital presence and engaging target audiences through strategic online campaigns.</p>
-                <p>My role included conducting extensive market research to understand the competitive landscape and identify opportunities for MASTH to stand out. I designed and developed the company’s website and landing pages, conducting A/B tests to improve conversion rates, and running digital advertising campaigns on platforms like Google and Facebook. These campaigns brought over 100,000 impressions and drove targeted traffic to our platforms, effectively raising awareness and engagement.</p>
-                <p>Through detailed analysis of visitor behavior and campaign performance, I optimized our strategies to generate quality leads, achieving a conversion rate of 5% from over 2,000 unique visitors. This digital approach greatly increased the startup’s visibility, as it had previously relied mostly on word-of-mouth and local outreach to schools. My contributions were recognized, and I was awarded Best Intern out of 25 interns. I was also invited to continue working with the company, highlighting the impact of my work on supporting the well-being of young people in India.</p>
+                <p>My role included conducting extensive market research to understand the competitive landscape and identify opportunities for MASTH to stand out. I designed and developed the company's website and landing pages, conducting A/B tests to improve conversion rates, and running digital advertising campaigns on platforms like Google and Facebook. These campaigns brought over <strong>100,000 impressions</strong> and drove targeted traffic to our platforms, effectively raising awareness and engagement.</p>
+                <p>Through detailed analysis of visitor behavior and campaign performance, I optimized our strategies to generate quality leads, achieving a <strong>conversion rate of 5%</strong> from over 2,000 unique visitors. This digital approach greatly increased the startup's visibility, as it had previously relied mostly on word-of-mouth and local outreach to schools. My contributions were recognized, and I was awarded <strong>Best Intern out of 25 interns</strong>. I was also invited to continue working with the company, highlighting the impact of my work on supporting the well-being of young people in India.</p>
                 <p>By leveraging a data-driven approach to digital marketing, I helped MASTH engage with a broader audience and demonstrated the importance of innovative solutions in promoting mental wellness. This internship honed my skills in market research, digital marketing, and the practical application of business growth strategies in a socially impactful domain.</p>
             </div>
         </article>
-
-        
     </section>
 
     <div class="divider-aurora" aria-hidden="true"></div>
 
     <section class="projects">
-        <h2 class="section-title">Projects</h2>
+        <h2 class="section-title">Selected Projects</h2>
+        
         <article class="project">
-            <h2>LLM Optimisations</h2>
-            <p>This project contains my work on optimizing Large Language Models (LLMs), focusing on improving efficiency, reducing computational load, and making fine-tuning more accessible for diverse applications.</p>
-            <a href="https://github.com/ApriCuz54/LLM_Optimization" class="project-link" target="_blank">GitHub Link</a>
-        </article>
-
-        <article class="project">
-            <h2>Dementia Detection</h2>
-            <p>This project aims to improve the early detection of dementia using recent advancements in machine learning, particularly large language models (LLMs).</p>
+            <h2>Alzheimer's Dementia Detection using Deep Learning</h2>
+            <p><em>Jan 2024 - May 2024 | BITS Pilani</em></p>
+            <p>Built bi-directional LSTM models with attention mechanisms achieving <strong>90.16% F1-score</strong> for detecting Alzheimer's from speech transcripts. Integrated RoBERTa embeddings and fine-tuned attention mechanisms to improve performance. Augmented Pitt Corpus dataset from ~500 to <strong>10,000+ samples</strong> using LLM-based synthetic data generation.</p>
+            <p><strong>Tech:</strong> PyTorch, RoBERTa, LSTM with Attention, NLP, Data Augmentation</p>
             <a href="https://github.com/ApriCuz54/DementiaDetection" class="project-link" target="_blank">GitHub Link</a>
         </article>
 
         <article class="project">
-            <h2>Image Compression</h2>
-            <p>This project demonstrates how Singular Value Decomposition (SVD) can be applied to compress images by reducing the rank of their matrix representation.</p>
-            <a href="https://github.com/ApriCuz54/SVD" class="project-link" target="_blank">GitHub Link</a>
+            <h2>Efficient Fine-Tuning with Model Pruning</h2>
+            <p><em>Sept 2024 - Dec 2024 | IIT Kharagpur</em></p>
+            <p>Fine-tuned RoBERTa using LoRA for sequence classification achieving <strong>96.58% F1-score</strong> on the SamSum dataset. Evaluated magnitude-based vs random pruning, demonstrating that magnitude-based pruning maintains <strong>95.1% performance at 50% sparsity</strong>—crucial for deploying compact LLMs in resource-constrained environments.</p>
+            <p><strong>Tech:</strong> PyTorch, Hugging Face Transformers, LoRA, Model Pruning</p>
+            <a href="https://github.com/ApriCuz54/LLM_Optimization" class="project-link" target="_blank">GitHub Link</a>
         </article>
 
         <article class="project">
-            <h2>Brain Inspired Deep Learning</h2>
-            <p>These projects were part of the Brain Inspired Deep Learning course. I explore mathematical models and concepts inspired by both neuroscience and chaos theory, focusing on how complex systems behave over time.</p>
+            <h2>Brain-Inspired Deep Learning</h2>
+            <p><em>2024 | BITS Pilani</em></p>
+            <p>Mathematical models and implementations inspired by neuroscience and chaos theory, exploring how complex systems behave over time. Projects include neural dynamics modeling and biologically-plausible learning algorithms.</p>
+            <p><strong>Tech:</strong> Python, NumPy, Mathematical Modeling, Neuroscience-inspired AI</p>
             <a href="https://github.com/ApriCuz54/BIDL_projects" class="project-link" target="_blank">GitHub Link</a>
         </article>
 
         <article class="project">
-            <h2>Handwriting Recognition</h2>
-            <p>This project involved developing a system to convert handwritten text into digital text using Machine Learning techniques such as LSTMs, RNNs, and CNNs, achieving a 79% word recognition accuracy.</p>
-            <a href="https://github.com/ApriCuz54/HandwritingRecognition" class="project-link" target="_blank">GitHub Link</a>
-        </article>
-
-        <article class="project">
-            <h2>Early Exploration of ML</h2>
-            <p>This is a collection of my early projects exploring the fundamentals of Machine Learning. The projects focus on building a solid understanding of basic ML concepts and applying them to simple datasets.</p>
-            <a href="https://github.com/ApriCuz54/EarlyML" class="project-link" target="_blank">GitHub Link</a>
+            <h2>Remind-Me-There: Location-Based Task Manager</h2>
+            <p><em>Jan 2025 - Apr 2025 | BITS Pilani</em></p>
+            <p>Conceptualized and developed a cross-platform location-based to-do list app. Integrated Google Maps API with Expo to trigger location-based tasks and experimented with ML-based task classification.</p>
+            <p><strong>Tech:</strong> React Native, Expo, Google Maps API, Mobile Development</p>
+            <a href="https://github.com/ApriCuz54" class="project-link" target="_blank">GitHub Profile</a>
         </article>
     </section>
     
     <footer>
-        <p>&copy; 2024 Aditya Chatterjee. All rights reserved.</p>
+        <p><strong>Get in Touch:</strong> adi.chatterjee@icloud.com | (857) 284-2775</p>
+        <p><a href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/" target="_blank" style="color: #60a5fa; text-decoration: none;">LinkedIn</a> | <a href="https://github.com/ApriCuz54" target="_blank" style="color: #60a5fa; text-decoration: none;">GitHub</a></p>
+        <p>&copy; 2025 Aditya Chatterjee. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
