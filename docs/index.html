@@ -215,31 +215,8 @@
         </article>
 
         <!-- Agent Civ -->
-        <article class="tile tile-wide tile-split tile-agents" id="w-civ" data-cat="agents">
-          <div class="tile-text">
-            <p class="tile-kind">Independent research, Sep 2026 – present</p>
-            <h3><a href="https://github.com/ApriCuz54/agent-civ-lab">Agent Civilizations: when instructions compete</a></h3>
-            <p>It began as multi-agent games (pricing, the prisoner's dilemma, reputation, a shared commons) and grew into a pre-registered, cross-model test of whether those lessons help agents on everyday tasks: negotiating, picking which worker to trust, sharing a budget, and handling refunds under a policy.</p>
-            <p>Mostly they didn't transfer, and the report keeps those nulls in. The clearest effect: confident-sounding notes about workers made agents choose worse, even with each worker's checked history in view.</p>
-          </div>
-          <svg class="diagram diagram-net" viewBox="0 0 220 180" role="img" aria-label="Illustration of several models from different families playing the same games and tasks.">
-            <g class="n-edges">
-              <line x1="110" y1="90" x2="40" y2="34"/><line x1="110" y1="90" x2="180" y2="30"/>
-              <line x1="110" y1="90" x2="196" y2="112"/><line x1="110" y1="90" x2="150" y2="164"/>
-              <line x1="110" y1="90" x2="54" y2="154"/><line x1="110" y1="90" x2="20" y2="96"/>
-              <line x1="40" y1="34" x2="20" y2="96"/><line x1="180" y1="30" x2="196" y2="112"/>
-              <line x1="150" y1="164" x2="54" y2="154"/>
-            </g>
-            <circle class="n-hub" cx="110" cy="90" r="22"/>
-            <text class="d-txt" x="110" y="94" text-anchor="middle">task</text>
-            <circle class="n a" cx="40" cy="34" r="11"/><circle class="n b" cx="180" cy="30" r="11"/>
-            <circle class="n c" cx="196" cy="112" r="11"/><circle class="n a" cx="150" cy="164" r="11"/>
-            <circle class="n b" cx="54" cy="154" r="11"/><circle class="n c" cx="20" cy="96" r="11"/>
-          </svg>
-        </article>
-
         <!-- Paper -->
-        <article class="tile tile-systems" data-cat="systems">
+        <article class="tile tile-half tile-systems" data-cat="systems">
           <p class="tile-kind">First author, IEEE AIMLSys EDGE-X 2025</p>
           <h3><a href="https://ieeexplore.ieee.org/abstract/document/11330803">Cost-aware fine-tuning for efficient LLM adaptation</a></h3>
           <p>PEFT and hyperparameter search benchmarked on CPU, T4, L4 and A100. Freezing all but the top two layers matched full fine-tuning accuracy with about 10% of parameters trained.</p>
@@ -250,8 +227,32 @@
           </figure>
         </article>
 
+        <article class="tile tile-full civ-v tile-agents" id="w-civ" data-cat="agents">
+          <div class="tile-text">
+            <p class="tile-kind">Independent research, Sep 2026 – present</p>
+            <h3><a href="https://github.com/ApriCuz54/agent-civ-lab">Agent Civilizations: when instructions compete</a></h3>
+            <p>It began as multi-agent games (pricing, the prisoner's dilemma, reputation, a shared commons) and grew into a pre-registered study across twelve models from six families: do those lessons help agents on everyday tasks like negotiating, picking which worker to trust, sharing a budget and handling refunds?</p>
+            <p>Mostly they didn't, and the report keeps those nulls in. Later phases asked what a bad actor can get away with, and what actually contains one inside a fleet of agents.</p>
+          </div>
+          <div class="civ-fig">
+            <h4>One rogue in a fleet of five: only a hard cap contains it</h4>
+            <p class="take">One misbehaving agent costs the fleet about 14% of its output. Records, warnings and identity checks barely move that; capping what any one agent can take or pass on cuts it by 77%, on every model.</p>
+            <div class="seg" role="group" aria-label="Rogue type">
+              <button aria-pressed="true" data-rogue="all">All rogues</button>
+              <button aria-pressed="false" data-rogue="selfish">Selfish</button>
+              <button aria-pressed="false" data-rogue="liar">Liar</button>
+              <button aria-pressed="false" data-rogue="framer">Framer</button>
+              <button aria-pressed="false" data-rogue="shifter">Name-changer</button>
+            </div>
+            <svg class="chart" data-fig="B" viewBox="0 0 520 280" role="img" aria-label="Share of fleet output lost to one rogue agent under each defence. No defence 14%, damage cap 3%."></svg>
+            <p class="src">Phase F, pre-registered, 6 models, two fleet tasks. Damage cap −10.8 points (95% CI −14.6 to −6.7). An exclusion vote also cut harm but expelled an honest member in 19–67% of cells.</p>
+          </div>
+        </article>
+
+
+
         <!-- Self-correction -->
-        <article class="tile tile-agents" data-cat="agents">
+        <article class="tile tile-half tile-agents" data-cat="agents">
           <p class="tile-kind">Northeastern Generative AI course, 2026</p>
           <h3><a href="https://github.com/ApriCuz54/CS6180-Team10">Does LLM self-correction help?</a></h3>
           <p>Generate, critique, revise on 250 MATH-500 problems. How specific the critique prompt was mattered more than how strong the critic was; generic prompts tripled vague critiques.</p>
@@ -263,7 +264,7 @@
         </article>
 
         <!-- Spec decode -->
-        <article class="tile tile-systems" id="w-spec" data-cat="systems">
+        <article class="tile tile-half tile-systems" id="w-spec" data-cat="systems">
           <p class="tile-kind">Side project, in progress</p>
           <h3>Speculative decoding compiler lab</h3>
           <p>A vLLM benchmark harness on a 12 GB card. Two questions: at what concurrency does speculative decoding stop paying, and how much of the answer comes from <code>torch.compile</code>, CUDA graphs and the Triton kernels on the verify path rather than the draft model?</p>

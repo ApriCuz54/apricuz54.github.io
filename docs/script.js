@@ -151,3 +151,41 @@ document.addEventListener("DOMContentLoaded", () => {
   readout.textContent = messages.low;
   place(156);
 });
+
+// Agent Civilizations figure: Phase F results from agent-civ-lab (results/v2/_phase_f.md).
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent && parent.appendChild(e); return e; };
+  let tip = document.querySelector(".tip");
+  if (!tip) { tip = document.createElement("div"); tip.className = "tip"; tip.setAttribute("role", "tooltip"); document.body.appendChild(tip); }
+  const showTip = (e, html) => { tip.innerHTML = html; tip.style.opacity = 1; tip.style.left = Math.min(e.clientX + 14, innerWidth - 220) + "px"; tip.style.top = (e.clientY + 14) + "px"; };
+  const hideTip = () => tip.style.opacity = 0;
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+
+  const figs = {
+    // B: Phase F, 6 models; harm = 1 - fleet output / no-rogue output.
+    B(svg, root) {
+      const arms = ["No defence", "Verified record", "Exclusion vote", "Record + exclusion", "Damage cap", "Warning", "Placebo", "Identity binding"];
+      const data = { selfish: [0.112, 0.172, 0.026, 0.025, -0.006, 0.125, 0.118, 0.139], liar: [0.169, 0.180, 0.104, 0.105, 0.040, 0.174, 0.152, 0.165], framer: [0.128, 0.155, 0.090, 0.131, 0.007, 0.135, 0.131, 0.139], shifter: [0.153, 0.187, 0.100, 0.118, 0.087, 0.176, 0.150, 0.167] };
+      data.all = arms.map((_, i) => ["selfish", "liar", "framer", "shifter"].reduce((s, k) => s + data[k][i], 0) / 4);
+      const L = 128, R = 460, T = 6, rowH = 30, max = 0.2, x = v => L + Math.max(v, 0) / max * (R - L);
+      const draw = key => {
+        svg.textContent = "";
+        [0, 0.05, 0.1, 0.15, 0.2].forEach(v => { el("line", { class: "gl", x1: x(v), x2: x(v), y1: T, y2: T + rowH * 8 }, svg); el("text", { x: x(v), y: T + rowH * 8 + 16, "text-anchor": "middle" }, svg, Math.round(v * 100) + "%"); });
+        el("text", { x: (L + R) / 2, y: T + rowH * 8 + 34, "text-anchor": "middle" }, svg, "Fleet output lost to the rogue");
+        data[key].forEach((v, i) => {
+          const yy = T + i * rowH, hot = i === 4, w = Math.max(x(v) - L, 2);
+          el("text", { x: L - 10, y: yy + 19, "text-anchor": "end", class: hot ? "lbl" : "" }, svg, arms[i]);
+          el("rect", { x: L, y: yy + 7, width: w, height: 16, rx: 4, fill: hot ? css("--roof") : css("--bar-base") }, svg);
+          el("text", { x: L + w + 6, y: yy + 19, class: hot ? "lbl" : "" }, svg, v < 0.005 ? "≈0" : Math.round(v * 100) + "%");
+          const h = el("rect", { x: 0, y: yy, width: 520, height: rowH, fill: "transparent" }, svg); h.addEventListener("pointermove", e => showTip(e, `${arms[i]}: ${(v * 100).toFixed(1)}% of output lost`)); h.addEventListener("pointerleave", hideTip);
+        });
+      };
+      const btns = [...root.querySelectorAll("[data-rogue]")];
+      btns.forEach(b => b.addEventListener("click", () => { btns.forEach(o => o.setAttribute("aria-pressed", o === b)); draw(b.dataset.rogue); }));
+      draw("all");
+    }
+  };
+  document.querySelectorAll("[data-fig]").forEach(n => { const f = figs[n.dataset.fig]; if (f) f(n, n.closest(".civ-fig")); });
+})();

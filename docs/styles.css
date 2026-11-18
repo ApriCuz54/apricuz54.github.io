@@ -285,11 +285,6 @@ code { font-family: var(--mono); font-size: 0.86em; }
 .d-mem { fill: none; stroke: var(--bar-base); stroke-dasharray: 3 3; }
 .d-hot { fill: var(--roof-fill); stroke: var(--roof); stroke-width: 1.5; }
 .d-arrow { stroke: var(--ink-2); stroke-width: 1.5; fill: none; }
-.diagram-net { max-width: 15rem; align-self: center; }
-.n-edges line { stroke: var(--rule); stroke-width: 1.5; }
-.n-hub { fill: var(--roof-fill); stroke: var(--roof); stroke-width: 2; }
-.n { stroke: var(--card); stroke-width: 2; }
-.n.a { fill: var(--t-agents); } .n.b { fill: var(--t-systems); } .n.c { fill: var(--t-ml); }
 
 /* wide tiles put their diagram beside the text on large screens */
 @media (min-width: 1100px) {
@@ -386,3 +381,22 @@ code { font-family: var(--mono); font-size: 0.86em; }
 .kv figcaption { font-size: 0.8rem; color: var(--ink-2); margin-top: 0.75rem; }
 @media (prefers-reduced-motion: reduce) { .kv-grid i { transition: none; } }
 @media (max-width: 620px) { .kv-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } .kv { padding: 1rem; } }
+
+/* ---------- Agent Civilizations figure (one rogue in a fleet) ---------- */
+.tile-full { grid-column: 1 / -1; }
+.civ-v { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 1.25rem 2.5rem; align-items: start; }
+.civ-v.stack { grid-template-columns: 1fr; }
+.civ-fig { display: grid; gap: 0.6rem; align-content: start; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 1.1rem 1.2rem 1rem; min-width: 0; }
+.civ-fig h4 { font-family: var(--display); font-size: 1.05rem; margin: 0; line-height: 1.25; }
+.civ-fig .take { color: var(--ink-2); font-size: 0.92rem; }
+.civ-fig .src { font-size: 0.78rem; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 0.55rem; margin-top: 0.2rem; }
+.chart { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { font-family: var(--body); fill: var(--ink-2); font-size: 12px; }
+.chart .lbl { fill: var(--ink); font-weight: 600; }
+.chart .gl { stroke: var(--grid); stroke-width: 1; }
+.chart .zero { stroke: var(--ink-2); stroke-width: 1.25; }
+.tip { position: fixed; pointer-events: none; z-index: 20; background: var(--ink); color: var(--paper); font-size: 0.82rem; padding: 0.35rem 0.6rem; border-radius: 6px; opacity: 0; transition: opacity 120ms; max-width: 16rem; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; }
+.seg button { font: inherit; font-size: 0.82rem; min-height: 2.25rem; padding: 0 0.75rem; border-radius: 999px; border: 1px solid var(--rule); background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+@media (max-width: 1000px) { .civ-v { grid-template-columns: 1fr; } }
