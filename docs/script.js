@@ -1,112 +1,79 @@
-// You can add any custom functionality here if required
-console.log("Welcome to Aditya Chatterjee's Project Showcase!");
+// Small, progressive enhancements. The page works without any of this.
+document.documentElement.classList.add("js");
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Reveal-on-scroll effect
-    const revealTargets = document.querySelectorAll(".project, .internship");
-    revealTargets.forEach(el => el.classList.add("reveal"));
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    revealTargets.forEach(el => observer.observe(el));
+  // Nav: show a rule and the name once the hero scrolls away.
+  const top = document.querySelector(".top");
+  const onScroll = () => top.classList.toggle("scrolled", window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Cursor-follow glow for cards and internships
-    const glowTargets = document.querySelectorAll('.project, .internship');
-    glowTargets.forEach(el => {
-        el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            el.style.setProperty('--mx', `${x}%`);
-            el.style.setProperty('--my', `${y}%`);
-        });
-    });
+  // Nav: mark the section in view.
+  const navLinks = [...document.querySelectorAll(".nav ul a")];
+  const byId = new Map(navLinks.map(a => [a.getAttribute("href").slice(1), a]));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        navLinks.forEach(a => a.removeAttribute("aria-current"));
+        const link = byId.get(e.target.id);
+        if (link) link.setAttribute("aria-current", "true");
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    document.querySelectorAll("main section[id], footer[id]").forEach(s => io.observe(s));
+  }
 
-    // Parallax tilt on header title
-    const header = document.querySelector('header');
-    const title = document.querySelector('.header-text h1');
-    if (header && title) {
-        header.addEventListener('mousemove', (e) => {
-            const rect = header.getBoundingClientRect();
-            const midX = rect.left + rect.width / 2;
-            const midY = rect.top + rect.height / 2;
-            const deltaX = (e.clientX - midX) / rect.width;
-            const deltaY = (e.clientY - midY) / rect.height;
-            title.style.setProperty('--ry', `${deltaX * 8}deg`);
-            title.style.setProperty('--rx', `${-deltaY * 8}deg`);
-        });
-        header.addEventListener('mouseleave', () => {
-            title.style.setProperty('--ry', `0deg`);
-            title.style.setProperty('--rx', `0deg`);
-        });
-    }
+  // Roofline: draw the roof once, then let the pointer trace a workload along it.
+  const svg = document.getElementById("roof");
+  const roof = document.getElementById("roof-line");
+  const dot = document.getElementById("probe-dot");
+  const drop = document.getElementById("probe-drop");
+  const readout = document.getElementById("roof-readout");
+  if (!svg || !roof) return;
 
-    // Lightning effect in header (automatic, non-darkening)
-    const lightningCanvas = document.getElementById('lightning');
-    if (lightningCanvas) {
-        const ctx = lightningCanvas.getContext('2d');
-        const DPR = window.devicePixelRatio || 1;
-        function resize() {
-            lightningCanvas.width = lightningCanvas.clientWidth * DPR;
-            lightningCanvas.height = lightningCanvas.clientHeight * DPR;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-        function bolt() {
-            const w = lightningCanvas.width;
-            const h = lightningCanvas.height;
-            const sx = Math.random() * w;
-            const sy = 0;
-            let x = sx;
-            let y = sy;
-            // draw glow path
-            ctx.lineWidth = 2 * DPR;
-            ctx.strokeStyle = 'rgba(160, 190, 255, 0.95)';
-            ctx.shadowColor = 'rgba(96,165,250,1)';
-            ctx.shadowBlur = 28 * DPR;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            const steps = 18 + Math.floor(Math.random() * 10);
-            for (let i = 0; i < steps; i++) {
-                x += (Math.random() - 0.5) * 60 * DPR;
-                y += (h / steps) * (0.8 + Math.random() * 0.4);
-                ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            // gentle, additive fade that does not darken image
-            const fadeStart = performance.now();
-            function fade(now) {
-                const t = (now - fadeStart) / 300; // ~300ms
-                if (t < 1) {
-                    ctx.globalCompositeOperation = 'destination-out';
-                    ctx.fillStyle = `rgba(0,0,0,${0.08})`;
-                    ctx.fillRect(0,0,w,h);
-                    ctx.globalCompositeOperation = 'lighter';
-                    requestAnimationFrame(fade);
-                } else {
-                    ctx.globalCompositeOperation = 'source-over';
-                }
-            }
-            requestAnimationFrame(fade);
-        }
-        setInterval(bolt, 1800 + Math.random()*1000);
-        // occasional double-bolt
-        setInterval(() => { if (Math.random() < 0.4) bolt(); }, 3200);
-    }
+  requestAnimationFrame(() => requestAnimationFrame(() => roof.classList.add("drawn")));
 
-    // Interlude removed
+  const X0 = 56, X1 = 456, RIDGE = 256, FLOOR = 280, CEIL = 80;
+  const yAt = x => (x <= RIDGE ? FLOOR - (x - X0) * (FLOOR - CEIL) / (RIDGE - X0) : CEIL);
+
+  const messages = {
+    low: "Low arithmetic intensity, like a decode step at small batch: memory-bound. Faster memory or less data moved is what helps.",
+    ridge: "Near the ridge point: bandwidth and compute run out at about the same time.",
+    high: "High arithmetic intensity, like a large prefill GEMM: compute-bound. Better kernels and lower precision are what help."
+  };
+  let state = "low";
+
+  const place = x => {
+    x = Math.max(X0 + 8, Math.min(X1 - 4, x));
+    const y = yAt(x);
+    dot.setAttribute("cx", x.toFixed(1));
+    dot.setAttribute("cy", y.toFixed(1));
+    drop.setAttribute("x1", x.toFixed(1));
+    drop.setAttribute("x2", x.toFixed(1));
+    drop.setAttribute("y1", y.toFixed(1));
+    const next = Math.abs(x - RIDGE) < 22 ? "ridge" : x < RIDGE ? "low" : "high";
+    if (next !== state) { state = next; readout.textContent = messages[state]; }
+  };
+
+  const toSvgX = clientX => {
+    const r = svg.getBoundingClientRect();
+    return ((clientX - r.left) / r.width) * 480;
+  };
+
+  svg.addEventListener("pointermove", e => place(toSvgX(e.clientX)));
+  svg.addEventListener("pointerdown", e => place(toSvgX(e.clientX)));
+
+  // Keyboard: the chart is focusable and arrow keys move the workload.
+  svg.setAttribute("tabindex", "0");
+  let kx = 156;
+  svg.addEventListener("keydown", e => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    kx += e.key === "ArrowRight" ? 20 : -20;
+    kx = Math.max(X0 + 8, Math.min(X1 - 4, kx));
+    place(kx);
+  });
+
+  readout.textContent = messages.low;
+  place(156);
 });
-
-function toggleContent(id) {
-    const content = document.getElementById(id);
-    if (content.classList.contains("open")) {
-        content.classList.remove("open");
-    } else {
-        content.classList.add("open");
-    }
-}
