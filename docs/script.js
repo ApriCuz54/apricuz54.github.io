@@ -1,4 +1,4 @@
-// Small, progressive enhancements. The page works without any of this.
+// Small, progressive enhancements. The page reads fine without any of this.
 document.documentElement.classList.add("js");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,13 +15,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        navLinks.forEach(a => a.removeAttribute("aria-current"));
         const link = byId.get(e.target.id);
-        if (link) link.setAttribute("aria-current", "true");
+        if (!link) return;
+        navLinks.forEach(a => a.removeAttribute("aria-current"));
+        link.setAttribute("aria-current", "true");
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     document.querySelectorAll("main section[id], footer[id]").forEach(s => io.observe(s));
+
+    // Bars grow once when their tile scrolls into view.
+    const barIO = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add("seen"); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll(".bars").forEach(b => barIO.observe(b));
+  } else {
+    document.querySelectorAll(".bars").forEach(b => b.classList.add("seen"));
   }
+
+  // Experience tabs (WAI-ARIA tabs pattern).
+  document.querySelectorAll("[data-tabs]").forEach(root => {
+    const tabs = [...root.querySelectorAll('[role="tab"]')];
+    const select = (tab, focus) => {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", on);
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t, false));
+      t.addEventListener("keydown", e => {
+        const keys = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+        if (e.key in keys) { e.preventDefault(); select(tabs[(i + keys[e.key] + tabs.length) % tabs.length], true); }
+        if (e.key === "Home") { e.preventDefault(); select(tabs[0], true); }
+        if (e.key === "End") { e.preventDefault(); select(tabs[tabs.length - 1], true); }
+      });
+    });
+  });
+
+  // Work filters.
+  const filterBtns = [...document.querySelectorAll("[data-filter]")];
+  const tiles = [...document.querySelectorAll(".bento .tile")];
+  filterBtns.forEach(btn => btn.addEventListener("click", () => {
+    const f = btn.dataset.filter;
+    filterBtns.forEach(b => b.setAttribute("aria-pressed", b === btn));
+    tiles.forEach(t => { t.hidden = f !== "all" && t.dataset.cat !== f; });
+    tiles.filter(t => !t.hidden).forEach(t => t.querySelector(".bars")?.classList.add("seen"));
+  }));
 
   // Roofline: draw the roof once, then let the pointer trace a workload along it.
   const svg = document.getElementById("roof");
@@ -35,14 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const X0 = 56, X1 = 456, RIDGE = 256, FLOOR = 280, CEIL = 80;
   const yAt = x => (x <= RIDGE ? FLOOR - (x - X0) * (FLOOR - CEIL) / (RIDGE - X0) : CEIL);
-
   const messages = {
     low: "Low arithmetic intensity, like a decode step at small batch: memory-bound. Faster memory or less data moved is what helps.",
     ridge: "Near the ridge point: bandwidth and compute run out at about the same time.",
     high: "High arithmetic intensity, like a large prefill GEMM: compute-bound. Better kernels and lower precision are what help."
   };
   let state = "low";
-
   const place = x => {
     x = Math.max(X0 + 8, Math.min(X1 - 4, x));
     const y = yAt(x);
@@ -54,23 +96,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const next = Math.abs(x - RIDGE) < 22 ? "ridge" : x < RIDGE ? "low" : "high";
     if (next !== state) { state = next; readout.textContent = messages[state]; }
   };
-
   const toSvgX = clientX => {
     const r = svg.getBoundingClientRect();
     return ((clientX - r.left) / r.width) * 480;
   };
-
   svg.addEventListener("pointermove", e => place(toSvgX(e.clientX)));
   svg.addEventListener("pointerdown", e => place(toSvgX(e.clientX)));
 
-  // Keyboard: the chart is focusable and arrow keys move the workload.
   svg.setAttribute("tabindex", "0");
   let kx = 156;
   svg.addEventListener("keydown", e => {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     e.preventDefault();
-    kx += e.key === "ArrowRight" ? 20 : -20;
-    kx = Math.max(X0 + 8, Math.min(X1 - 4, kx));
+    kx = Math.max(X0 + 8, Math.min(X1 - 4, kx + (e.key === "ArrowRight" ? 20 : -20)));
     place(kx);
   });
 

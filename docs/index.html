@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aditya Chatterjee, LLM inference and GPU performance</title>
-  <meta name="description" content="Aditya Chatterjee: MS CS at Northeastern, on co-op at AMD working on LLM serving performance: quantized Triton kernels in vLLM, roofline modeling, multi-agent LLM research.">
+  <meta name="description" content="Aditya Chatterjee: MS CS at Northeastern, on co-op at AMD working on LLM serving performance: quantized Triton kernels in vLLM, roofline modeling, and evaluation research on LLM agents.">
   <meta property="og:title" content="Aditya Chatterjee">
   <meta property="og:description" content="LLM inference and GPU performance. MS CS at Northeastern, co-op at AMD.">
   <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
   <meta name="theme-color" content="#11161d" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,30 +25,36 @@
       <ul>
         <li><a href="#now">Now</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main">
+    <!-- Hero -->
     <section class="hero wrap" id="top" aria-labelledby="hero-title">
       <div class="hero-text">
         <h1 id="hero-title">Aditya Chatterjee</h1>
         <p class="lede">I make large language models run faster on real hardware. Right now that means quantized Triton kernels and cache-aware scheduling in vLLM, on a co-op with AMD in San Jose.</p>
-        <p class="status">Looking for <strong>Summer 2027 internships</strong> and <strong>2027 new-grad roles</strong> in LLM inference, ML systems and GPU performance. MS CS at Northeastern, graduating May 2027. US citizen.</p>
-        <ul class="links">
-          <li><a href="mailto:adi.chatterjee@icloud.com">adi.chatterjee@icloud.com</a></li>
-          <li><a href="https://github.com/ApriCuz54">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/">LinkedIn</a></li>
+        <ul class="chips" aria-label="What I'm looking for">
+          <li>Summer 2027 internships</li>
+          <li>2027 new-grad roles</li>
+          <li>LLM inference and ML systems</li>
+          <li>US citizen</li>
         </ul>
+        <p class="status">MS CS at Northeastern, graduating May 2027. Bay Area first, then Boston, and open across the US.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:adi.chatterjee@icloud.com">Email me</a>
+          <a class="btn" href="https://github.com/ApriCuz54">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/">LinkedIn</a>
+        </div>
       </div>
 
       <figure class="roofline" aria-labelledby="roof-cap">
         <svg viewBox="0 0 480 330" role="img" aria-labelledby="roof-title roof-desc" id="roof">
           <title id="roof-title">A roofline diagram</title>
-          <desc id="roof-desc">Attainable throughput rises with arithmetic intensity while a workload is memory-bound, then flattens at the compute ceiling. Move the pointer across it to trace a workload along the roof.</desc>
+          <desc id="roof-desc">Attainable throughput rises with arithmetic intensity while a workload is memory-bound, then flattens at the compute ceiling. Move the pointer across it, or use the arrow keys, to trace a workload along the roof.</desc>
           <g class="grid" aria-hidden="true">
             <line x1="56" y1="40" x2="56" y2="280"/>
             <line x1="56" y1="280" x2="456" y2="280"/>
@@ -62,7 +68,7 @@
           <path class="region" d="M56 280 L256 80 L256 280 Z" aria-hidden="true"/>
           <line class="ridge" x1="256" y1="80" x2="256" y2="280" aria-hidden="true"/>
           <path class="roof" id="roof-line" d="M56 280 L256 80 L456 80" pathLength="1"/>
-          <text class="region-label" x="132" y="262">memory-bound</text>
+          <text class="region-label" x="118" y="262">memory-bound</text>
           <text class="region-label" x="300" y="262">compute-bound</text>
           <text class="axis-label" x="456" y="304" text-anchor="end">arithmetic intensity (FLOP / byte)</text>
           <text class="axis-label" x="44" y="40" text-anchor="end" transform="rotate(-90 44 40)" dx="-4">attainable throughput</text>
@@ -71,148 +77,235 @@
             <circle id="probe-dot" cx="156" cy="180" r="6"/>
           </g>
         </svg>
-        <figcaption id="roof-cap"><span id="roof-readout">A decode step at small batch sits here: memory-bound.</span></figcaption>
+        <figcaption id="roof-cap"><span id="roof-readout" aria-live="polite">Low arithmetic intensity, like a decode step at small batch: memory-bound.</span></figcaption>
       </figure>
     </section>
 
-    <section class="block wrap" id="now" aria-labelledby="now-title">
-      <h2 id="now-title">Now</h2>
-      <div class="block-body">
-        <article class="now-item">
-          <h3>A vLLM contribution for faster 4-bit inference on AMD GPUs</h3>
-          <p class="meta">At AMD since May 2026. <a href="https://github.com/vllm-project/vllm/issues/67330">RFC #67330</a></p>
-          <p>The RFC proposes letting a quantized W4A16 kernel own its LoRA computation, folding the adapter expand into the GEMM epilogue instead of running it as a separate pass. It is open for maintainer feedback on the interface; the implementation PR comes next.</p>
-        </article>
-        <article class="now-item">
-          <h3>Agent Civilizations</h3>
-          <p class="meta">Independent research since Sep 2026. <a href="https://github.com/ApriCuz54/agent-civ-lab">Code on GitHub</a></p>
-          <p>How LLM agents cooperate, collude and defect when they play repeated games together, and what that means for anyone deploying several agents at once. So far every result is from one model, Claude Haiku 4.5; replicating across models is the next step.</p>
-        </article>
-        <article class="now-item">
-          <h3>When does speculative decoding pay on one consumer GPU?</h3>
-          <p class="meta">Side project since Sep 2026. The repo is not public yet.</p>
-          <p>A benchmark harness for vLLM on a 12 GB card that asks two questions: at what concurrency speculative decoding stops helping, and how much of the answer comes from the compiler stack (<code>torch.compile</code>, CUDA graphs, the Triton kernels on the verify path) rather than the draft model. The harness is built and no numbers are in yet.</p>
-        </article>
+    <!-- Now -->
+    <section class="now band" id="now" aria-labelledby="now-title">
+      <div class="wrap">
+        <h2 id="now-title">What I'm working on now</h2>
+        <div class="now-grid">
+          <a class="now-card" href="#w-vllm">
+            <span class="pill pill-live">RFC open for review</span>
+            <h3>Fusing LoRA into 4-bit GEMMs in vLLM</h3>
+            <p>My AMD work, proposed upstream as RFC #67330. The implementation PR comes after maintainer feedback.</p>
+          </a>
+          <a class="now-card" href="#w-civ">
+            <span class="pill">Writing it up</span>
+            <h3>When instructions compete</h3>
+            <p>A cross-model study of whether game-theory lessons help everyday LLM agents. The context review is done and I'm drafting the report.</p>
+          </a>
+          <a class="now-card" href="#w-spec">
+            <span class="pill">Harness built</span>
+            <h3>Speculative decoding on one consumer GPU</h3>
+            <p>When does it stop paying, and how much of that is the compiler stack? No numbers in yet.</p>
+          </a>
+        </div>
       </div>
     </section>
 
+    <!-- Experience -->
     <section class="block wrap" id="experience" aria-labelledby="exp-title">
       <h2 id="exp-title">Experience</h2>
-      <div class="block-body">
-        <article class="role">
-          <header class="role-head">
-            <h3>AMD, AI Group, Client AI Solutions</h3>
-            <p class="when">May 2026 – present</p>
-          </header>
-          <p class="meta">Co-op, San Jose</p>
+      <div class="tabs" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Roles">
+          <button role="tab" id="tab-amd26" aria-controls="panel-amd26" aria-selected="true">
+            <span class="tab-org">AMD, San Jose</span>
+            <span class="tab-when">May 2026 – present</span>
+          </button>
+          <button role="tab" id="tab-amd24" aria-controls="panel-amd24" aria-selected="false" tabindex="-1">
+            <span class="tab-org">AMD, Hyderabad</span>
+            <span class="tab-when">May – Dec 2024</span>
+          </button>
+          <button role="tab" id="tab-masth" aria-controls="panel-masth" aria-selected="false" tabindex="-1">
+            <span class="tab-org">MASTH Ultrahive</span>
+            <span class="tab-when">2023</span>
+          </button>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="panel-amd26" aria-labelledby="tab-amd26" tabindex="0">
+          <h3>Co-op, AI Group, Client AI Solutions</h3>
+          <p class="meta">LLM serving performance on AMD GPUs and a unified-memory APU</p>
           <ul class="facts">
             <li>Rewrote vLLM's Triton W4A16 GEMM kernel to fuse multi-adapter LoRA into the GEMM epilogue: up to <span class="num">~1.4×</span> faster quantized GEMMs, <span class="num">1.6–1.7×</span> faster LoRA layers and <span class="num">25–29%</span> higher serving throughput. Now proposed upstream as an <a href="https://github.com/vllm-project/vllm/issues/67330">RFC</a>.</li>
-            <li>Characterized vLLM serving on a unified-memory APU across concurrency, KV-cache capacity, prefix caching and speculative decoding, and built a roofline model of where each one helps or backfires. Cache-aware request ordering raised throughput up to <span class="num">2.5×</span> under memory pressure.</li>
+            <li>Characterized vLLM serving on an APU across concurrency, KV-cache capacity, prefix caching and speculative decoding, with a roofline model of where each helps or backfires. Cache-aware request ordering raised throughput up to <span class="num">2.5×</span> under memory pressure.</li>
             <li>Built the benchmarking and profiling setup behind it, run across <span class="num">40+</span> open-source models.</li>
-            <li>Modeled heterogeneous inference across on-chip accelerators for concurrent multi-agent workloads, including prefill/decode disaggregation and load-aware routing, to find when splitting work actually helps.</li>
+            <li>Modeled heterogeneous inference across on-chip accelerators for concurrent multi-agent workloads, including prefill/decode disaggregation and load-aware routing.</li>
           </ul>
-        </article>
+        </div>
 
-        <article class="role">
-          <header class="role-head">
-            <h3>AMD, AI Group, AI Solutions</h3>
-            <p class="when">May – Dec 2024</p>
-          </header>
-          <p class="meta">Co-op, Hyderabad</p>
+        <div class="tabpanel" role="tabpanel" id="panel-amd24" aria-labelledby="tab-amd24" tabindex="0" hidden>
+          <h3>Co-op, AI Group, AI Solutions</h3>
+          <p class="meta">Getting LLMs onto RyzenAI NPUs</p>
           <ul class="facts">
             <li>Prepared LLMs for RyzenAI NPUs through ONNX: quantization, pruning, dtype conversion and layer fusion.</li>
-            <li>Wrote graph-level optimization tooling (model diffing, node fusion, weight prepacking) that cut model initialization time by <span class="num">~3×</span>, shipped to customers as a deployable package.</li>
+            <li>Wrote graph-level optimization tooling (model diffing, node fusion, weight prepacking) that cut model initialization time by <span class="num">~3×</span>.</li>
+            <li>Shipped the tooling to customers as a deployable package.</li>
           </ul>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="panel-masth" aria-labelledby="tab-masth" tabindex="0" hidden>
+          <h3>Business growth intern</h3>
+          <p class="meta">A teen mental-wellness startup, remote</p>
+          <ul class="facts">
+            <li>Built the company website and landing pages and ran its online campaigns.</li>
+            <li>Named best intern of 25.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="block wrap" id="work" aria-labelledby="work-title">
+      <div class="work-head">
+        <h2 id="work-title">Research and projects</h2>
+        <div class="filters" role="group" aria-label="Filter work">
+          <button type="button" aria-pressed="true" data-filter="all">All</button>
+          <button type="button" aria-pressed="false" data-filter="systems">Systems</button>
+          <button type="button" aria-pressed="false" data-filter="agents">Agents and evaluation</button>
+          <button type="button" aria-pressed="false" data-filter="ml">Applied ML</button>
+        </div>
+      </div>
+
+      <div class="bento">
+        <!-- vLLM -->
+        <article class="tile tile-wide tile-systems" id="w-vllm" data-cat="systems">
+          <div class="tile-text">
+            <p class="tile-kind">AMD co-op, 2026. Open RFC</p>
+            <h3><a href="https://github.com/vllm-project/vllm/issues/67330">Kernel-owned LoRA fusion for quantized layers in vLLM</a></h3>
+            <p>Serving many LoRA adapters on a 4-bit model normally means a separate adapter pass after every GEMM. I fold the adapter expand into the W4A16 GEMM's epilogue so it happens while the output tile is still on chip. Off by default, with a fallback to the standard path.</p>
+            <p class="tile-result">Up to <span class="num">~1.4×</span> faster quantized GEMMs and <span class="num">25–29%</span> more serving throughput.</p>
+          </div>
+          <svg class="diagram" viewBox="0 0 300 150" role="img" aria-label="Diagram: before, the GEMM writes its output and a separate LoRA pass reads it back; after, the LoRA expand runs inside the GEMM epilogue.">
+            <text class="d-label" x="0" y="14">Standard path</text>
+            <rect class="d-box" x="0" y="22" width="92" height="34" rx="5"/><text class="d-txt" x="46" y="44" text-anchor="middle">W4A16 GEMM</text>
+            <rect class="d-mem" x="104" y="22" width="56" height="34" rx="5"/><text class="d-txt" x="132" y="44" text-anchor="middle">HBM</text>
+            <rect class="d-box" x="172" y="22" width="92" height="34" rx="5"/><text class="d-txt" x="218" y="44" text-anchor="middle">LoRA expand</text>
+            <path class="d-arrow" d="M92 39 H102 M160 39 H170"/>
+            <text class="d-label" x="0" y="92">Fused</text>
+            <rect class="d-box d-hot" x="0" y="100" width="264" height="34" rx="5"/>
+            <text class="d-txt" x="132" y="122" text-anchor="middle">GEMM main loop  +  LoRA expand in epilogue</text>
+          </svg>
         </article>
 
-        <article class="role role-small">
-          <header class="role-head">
-            <h3>MASTH Ultrahive Healthcare</h3>
-            <p class="when">2023</p>
-          </header>
-          <p class="meta">Business growth intern, remote</p>
-          <p>Built the website and ran the online campaigns for a teen mental-wellness startup. Named best intern of 25.</p>
+        <!-- Agent Civ -->
+        <article class="tile tile-wide tile-split tile-agents" id="w-civ" data-cat="agents">
+          <div class="tile-text">
+            <p class="tile-kind">Independent research, Sep 2026 – present</p>
+            <h3><a href="https://github.com/ApriCuz54/agent-civ-lab">Agent Civilizations: when instructions compete</a></h3>
+            <p>It began as multi-agent games (pricing, the prisoner's dilemma, reputation, a shared commons) and grew into a pre-registered, cross-model test of whether those lessons help agents on everyday tasks: negotiating, picking which worker to trust, sharing a budget, and handling refunds under a policy.</p>
+            <p>Mostly they didn't transfer, and the report keeps those nulls in. The clearest effect: confident-sounding notes about workers made agents choose worse, even with each worker's checked history in view.</p>
+          </div>
+          <svg class="diagram diagram-net" viewBox="0 0 220 180" role="img" aria-label="Illustration of several models from different families playing the same games and tasks.">
+            <g class="n-edges">
+              <line x1="110" y1="90" x2="40" y2="34"/><line x1="110" y1="90" x2="180" y2="30"/>
+              <line x1="110" y1="90" x2="196" y2="112"/><line x1="110" y1="90" x2="150" y2="164"/>
+              <line x1="110" y1="90" x2="54" y2="154"/><line x1="110" y1="90" x2="20" y2="96"/>
+              <line x1="40" y1="34" x2="20" y2="96"/><line x1="180" y1="30" x2="196" y2="112"/>
+              <line x1="150" y1="164" x2="54" y2="154"/>
+            </g>
+            <circle class="n-hub" cx="110" cy="90" r="22"/>
+            <text class="d-txt" x="110" y="94" text-anchor="middle">task</text>
+            <circle class="n a" cx="40" cy="34" r="11"/><circle class="n b" cx="180" cy="30" r="11"/>
+            <circle class="n c" cx="196" cy="112" r="11"/><circle class="n a" cx="150" cy="164" r="11"/>
+            <circle class="n b" cx="54" cy="154" r="11"/><circle class="n c" cx="20" cy="96" r="11"/>
+          </svg>
+        </article>
+
+        <!-- Paper -->
+        <article class="tile tile-systems" data-cat="systems">
+          <p class="tile-kind">First author, IEEE AIMLSys EDGE-X 2025</p>
+          <h3><a href="https://ieeexplore.ieee.org/abstract/document/11330803">Cost-aware fine-tuning for efficient LLM adaptation</a></h3>
+          <p>PEFT and hyperparameter search benchmarked on CPU, T4, L4 and A100. Freezing all but the top two layers matched full fine-tuning accuracy with about 10% of parameters trained.</p>
+          <figure class="bars" aria-label="CPU training time relative to full fine-tuning">
+            <div class="bar-row"><span class="bar-name">Full fine-tuning</span><span class="bar-track"><span class="bar bar-base" style="--v:100"></span></span><span class="bar-val">100%</span></div>
+            <div class="bar-row"><span class="bar-name">Top-two-layer freeze</span><span class="bar-track"><span class="bar bar-hi" style="--v:14"></span></span><span class="bar-val">14%</span></div>
+            <figcaption>CPU training time, best case (up to 86% less)</figcaption>
+          </figure>
+        </article>
+
+        <!-- Self-correction -->
+        <article class="tile tile-agents" data-cat="agents">
+          <p class="tile-kind">Northeastern Generative AI course, 2026</p>
+          <h3><a href="https://github.com/ApriCuz54/CS6180-Team10">Does LLM self-correction help?</a></h3>
+          <p>Generate, critique, revise on 250 MATH-500 problems. How specific the critique prompt was mattered more than how strong the critic was; generic prompts tripled vague critiques.</p>
+          <figure class="bars" aria-label="Accuracy gain over no correction, in points">
+            <div class="bar-row"><span class="bar-name">Targeted critique</span><span class="bar-track"><span class="bar bar-hi" style="--v:100"></span></span><span class="bar-val">+6.4</span></div>
+            <div class="bar-row"><span class="bar-name">Generic critique</span><span class="bar-track"><span class="bar bar-base" style="--v:19"></span></span><span class="bar-val">+1.2</span></div>
+            <figcaption>Accuracy gain over no correction, points</figcaption>
+          </figure>
+        </article>
+
+        <!-- Spec decode -->
+        <article class="tile tile-systems" id="w-spec" data-cat="systems">
+          <p class="tile-kind">Side project, in progress</p>
+          <h3>Speculative decoding compiler lab</h3>
+          <p>A vLLM benchmark harness on a 12 GB card. Two questions: at what concurrency does speculative decoding stop paying, and how much of the answer comes from <code>torch.compile</code>, CUDA graphs and the Triton kernels on the verify path rather than the draft model?</p>
+          <p class="tile-note">The harness is built and tested against a mock server. No GPU numbers yet, and the repo goes public once there are.</p>
+        </article>
+
+        <!-- LoRA pruning -->
+        <article class="tile tile-half tile-ml" data-cat="ml">
+          <p class="tile-kind">IIT Kharagpur, 2024</p>
+          <h3><a href="https://github.com/ApriCuz54/LLM_Optimization">Pruning LoRA weights</a></h3>
+          <p>RoBERTa with LoRA reached <span class="num">96.58%</span> F1 on SamSum. Which half of the adapter weights you prune matters a lot:</p>
+          <figure class="bars" aria-label="F1 at 50% sparsity">
+            <div class="bar-row"><span class="bar-name">Magnitude pruning</span><span class="bar-track"><span class="bar bar-hi" style="--v:95.1"></span></span><span class="bar-val">95.1%</span></div>
+            <div class="bar-row"><span class="bar-name">Random pruning</span><span class="bar-track"><span class="bar bar-base" style="--v:70.4"></span></span><span class="bar-val">70.4%</span></div>
+            <figcaption>F1 at 50% sparsity</figcaption>
+          </figure>
+        </article>
+
+        <!-- Alzheimer's -->
+        <article class="tile tile-half tile-ml" data-cat="ml">
+          <p class="tile-kind">BITS Pilani, 2024</p>
+          <h3><a href="https://github.com/ApriCuz54/DementiaDetection">Alzheimer's detection from speech</a></h3>
+          <p>A bidirectional LSTM with attention over RoBERTa embeddings raised F1 from <span class="num">88.2%</span> to <span class="num">90.16%</span>. LLM-generated synthetic transcripts grew the Pitt Corpus from about 500 to over 10,000 samples.</p>
         </article>
       </div>
     </section>
 
-    <section class="block wrap" id="research" aria-labelledby="res-title">
-      <h2 id="res-title">Research</h2>
-      <div class="block-body">
-        <article class="paper">
-          <h3><a href="https://ieeexplore.ieee.org/abstract/document/11330803">Cost-Aware Fine-Tuning for Efficient LLM Adaptation</a></h3>
-          <p class="meta">First author, IEEE AIMLSys EDGE-X 2025. BITS Pilani.</p>
-          <p>A system-level study of parameter-efficient fine-tuning and hyperparameter search across CPU, T4, L4 and A100 hardware. Freezing all but the top two layers matched full fine-tuning accuracy while training about <span class="num">10%</span> of the parameters, and cut CPU training time by up to <span class="num">86%</span>.</p>
-        </article>
-
-        <article class="paper">
-          <h3><a href="https://github.com/ApriCuz54/agent-civ-lab">Agent Civilizations: LLM agents in multi-agent games</a></h3>
-          <p class="meta">Independent research, in progress</p>
-          <p>A reproducible, cost-logged harness covering a pricing duopoly, the iterated prisoner's dilemma, an Axelrod-style strategy panel, reputation systems and a commons: <span class="num">14</span> experiments and <span class="num">15,348</span> model calls so far. Single instructions can reliably tip agents toward collusive pricing or defection, while prosocial phrasing did nothing measurable above an already cooperative baseline. A lifetime reputation score gets gamed by agents that build trust and then betray; a recency window closes that gap, and forged histories reopen it.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="block wrap" id="projects" aria-labelledby="proj-title">
-      <h2 id="proj-title">Projects</h2>
-      <div class="block-body project-list">
-        <article class="project">
-          <h3><a href="https://github.com/ApriCuz54/CS6180-Team10">LLM self-correction benchmark</a></h3>
-          <p class="meta">Northeastern Generative AI course, Mar – Apr 2026</p>
-          <p>A generate, critique, revise pipeline over 250 MATH-500 problems with four conditions that each isolate one variable. A targeted critique prompt raised accuracy by <span class="num">6.4</span> points against <span class="num">1.2</span> for a generic one, and an LLM-as-judge classifier showed why: the generic prompt tripled the number of vague critiques.</p>
-        </article>
-        <article class="project">
-          <h3><a href="https://github.com/ApriCuz54/LLM_Optimization">LoRA fine-tuning and pruning</a></h3>
-          <p class="meta">IIT Kharagpur, Sep – Dec 2024</p>
-          <p>RoBERTa with LoRA reached <span class="num">96.58%</span> F1 on SamSum. Magnitude-based pruning of the LoRA weights held <span class="num">95.1%</span> F1 at 50% sparsity, against <span class="num">70.4%</span> for random pruning.</p>
-        </article>
-        <article class="project">
-          <h3><a href="https://github.com/ApriCuz54/DementiaDetection">Alzheimer's detection from speech transcripts</a></h3>
-          <p class="meta">BITS Pilani, Jan – May 2024</p>
-          <p>A bidirectional LSTM with attention over RoBERTa embeddings, raising F1 from <span class="num">88.2%</span> to <span class="num">90.16%</span>. The Pitt Corpus was expanded from about 500 to over 10,000 samples with LLM-generated synthetic data.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="block wrap" id="education" aria-labelledby="edu-title">
-      <h2 id="edu-title">Education</h2>
-      <div class="block-body">
-        <article class="role">
-          <header class="role-head">
-            <h3>Northeastern University</h3>
-            <p class="when">May 2027</p>
-          </header>
-          <p class="meta">MS Computer Science, GPA 4.00</p>
-          <p>Artificial intelligence, generative AI, data structures and algorithms, programming design paradigms.</p>
-        </article>
-        <article class="role">
-          <header class="role-head">
-            <h3>BITS Pilani, Goa</h3>
-            <p class="when">May 2025</p>
-          </header>
-          <p class="meta">BE Computer Science</p>
-          <p>Deep learning, brain-inspired deep learning, design and analysis of algorithms, game theory, and psychology electives out of an interest in how people and AI systems work together.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="block wrap" id="about" aria-labelledby="about-title">
-      <h2 id="about-title">Outside work</h2>
-      <div class="block-body about">
-        <img src="portrait.jpg" alt="Portrait of Aditya Chatterjee" width="160" height="160" loading="lazy" decoding="async">
-        <p>I play basketball whenever I can find a court, and I hold a Grade 8 certificate in Western classical guitar. Home base is Boston; for now I'm in San Jose.</p>
+    <!-- Education + about -->
+    <section class="band" id="about" aria-label="Education and outside work">
+      <div class="wrap duo">
+        <div>
+          <h2>Education</h2>
+          <dl class="edu">
+            <div>
+              <dt>Northeastern University <span class="when">May 2027</span></dt>
+              <dd>MS Computer Science, GPA 4.00. AI, generative AI, algorithms, programming design paradigms.</dd>
+            </div>
+            <div>
+              <dt>BITS Pilani, Goa <span class="when">May 2025</span></dt>
+              <dd>BE Computer Science. Deep learning, brain-inspired deep learning, algorithms, game theory, and psychology electives.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="about">
+          <img src="portrait.jpg" alt="Portrait of Aditya Chatterjee" width="160" height="160" loading="lazy" decoding="async">
+          <div>
+            <h2>Outside work</h2>
+            <p>I play basketball whenever I can find a court, and I hold a Grade 8 certificate in Western classical guitar. Home base is Boston; for now I'm in San Jose.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="foot wrap" id="contact">
-    <h2>Get in touch</h2>
-    <p>The fastest way to reach me is email: <a href="mailto:adi.chatterjee@icloud.com">adi.chatterjee@icloud.com</a>. You can also call or text (857) 284-2775.</p>
-    <ul class="links">
-      <li><a href="https://github.com/ApriCuz54">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/">LinkedIn</a></li>
-    </ul>
-    <p class="small">Updated November 2026.</p>
+  <footer class="foot" id="contact">
+    <div class="wrap foot-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>Email is the fastest way to reach me. You can also call or text (857) 284-2775.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:adi.chatterjee@icloud.com">adi.chatterjee@icloud.com</a>
+        <a class="btn" href="https://github.com/ApriCuz54">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/aditya-chatterjee-b19553233/">LinkedIn</a>
+      </div>
+    </div>
+    <p class="wrap small">Updated November 2026.</p>
   </footer>
 
   <script src="script.js" defer></script>
