@@ -360,3 +360,29 @@ code { font-family: var(--mono); font-size: 0.86em; }
   body { background: #fff; color: #000; }
   .tabpanel[hidden] { display: block; }
 }
+
+/* ---------- KV cache figure ---------- */
+.kv { margin: 1.75rem 0 0; padding: 1.25rem 1.35rem 1.1rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--paper); max-width: 46rem; }
+.kv-head h4 { font-family: var(--display); font-size: 1.05rem; margin: 0; }
+.kv-sub { color: var(--ink-2); font-size: 0.92rem; margin-top: 0.2rem; }
+.kv-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; margin: 1rem 0 0.9rem; }
+.kv-slider { display: grid; gap: 0.3rem; font-size: 0.9rem; color: var(--ink-2); min-width: 15rem; flex: 1 1 15rem; }
+.kv-slider output { font-family: var(--mono); color: var(--ink); font-weight: 500; margin-left: 0.35rem; }
+.kv-slider input { accent-color: var(--roof); width: 100%; min-height: 1.75rem; }
+.kv-toggle { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; cursor: pointer; min-height: 2.75rem; }
+.kv-toggle input { accent-color: var(--link); width: 1.1rem; height: 1.1rem; }
+.kv-grid { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 3px; }
+.kv-grid i { aspect-ratio: 1.6; border-radius: 3px; background: color-mix(in srgb, var(--grid) 80%, transparent); transition: background-color 220ms var(--ease-out); }
+.kv-grid i.p { background: var(--link); }
+.kv-grid i.r { background: var(--roof); }
+.kv-grid i.r.alt { background: color-mix(in srgb, var(--roof) 72%, var(--ink)); }
+.kv-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin-top: 0.75rem; font-size: 0.82rem; color: var(--ink-2); }
+.kv-legend .sw { display: inline-block; width: 0.8rem; height: 0.55rem; border-radius: 2px; margin-right: 0.4rem; vertical-align: 0.05em; }
+.sw-prefix { background: var(--link); } .sw-req { background: var(--roof); } .sw-free { background: var(--grid); }
+.kv-readout { margin-top: 0.75rem; font-size: 0.95rem; }
+.kv-readout strong { font-weight: 600; }
+.kv-queue { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 0.4rem; min-height: 0.75rem; }
+.kv-queue span { width: 0.75rem; height: 0.75rem; border-radius: 50%; border: 1.5px dashed var(--bar-base); }
+.kv figcaption { font-size: 0.8rem; color: var(--ink-2); margin-top: 0.75rem; }
+@media (prefers-reduced-motion: reduce) { .kv-grid i { transition: none; } }
+@media (max-width: 620px) { .kv-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } .kv { padding: 1rem; } }

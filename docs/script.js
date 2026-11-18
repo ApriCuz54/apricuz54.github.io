@@ -67,6 +67,42 @@ document.addEventListener("DOMContentLoaded", () => {
     tiles.filter(t => !t.hidden).forEach(t => t.querySelector(".bars")?.classList.add("seen"));
   }));
 
+
+  // KV cache figure: illustrative block accounting (not measured data).
+  (() => {
+    const grid = document.getElementById("kv-grid");
+    if (!grid) return;
+    const nIn = document.getElementById("kv-n"), nOut = document.getElementById("kv-n-out");
+    const pre = document.getElementById("kv-prefix");
+    const readout = document.getElementById("kv-readout"), queue = document.getElementById("kv-queue");
+    const TOTAL = 128, PREFIX = 6, OWN = 5;
+    const cells = Array.from({ length: TOTAL }, () => grid.appendChild(document.createElement("i")));
+    const render = () => {
+      const n = +nIn.value, share = pre.checked;
+      nOut.textContent = n;
+      const perReq = share ? OWN : PREFIX + OWN;
+      const base = share ? PREFIX : 0;
+      const fit = Math.max(0, Math.min(n, Math.floor((TOTAL - base) / perReq)));
+      const waiting = n - fit;
+      let i = 0;
+      const paint = (cls, alt) => { if (i < TOTAL) cells[i++].className = cls + (alt ? " alt" : ""); };
+      if (share) for (let k = 0; k < PREFIX; k++) paint("p");
+      for (let r = 0; r < fit; r++) {
+        if (!share) for (let k = 0; k < PREFIX; k++) paint("p");
+        for (let k = 0; k < OWN; k++) paint("r", r % 2);
+      }
+      while (i < TOTAL) cells[i++].className = "";
+      const used = base + fit * perReq;
+      readout.innerHTML = `<strong>${fit} running</strong>, ${waiting ? `<strong>${waiting} waiting</strong> for memory` : "none waiting"}. ${Math.round(used / TOTAL * 100)}% of the cache in use` +
+        (share ? "; the shared prefix is stored once." : "; each request stores its own copy of the prefix.");
+      queue.innerHTML = "<span></span>".repeat(waiting);
+      grid.setAttribute("aria-label", `KV cache: ${fit} of ${n} requests fit, ${waiting} waiting, ${Math.round(used / TOTAL * 100)}% of blocks used`);
+    };
+    nIn.addEventListener("input", render);
+    pre.addEventListener("change", render);
+    render();
+  })();
+
   // Roofline: draw the roof once, then let the pointer trace a workload along it.
   const svg = document.getElementById("roof");
   const roof = document.getElementById("roof-line");

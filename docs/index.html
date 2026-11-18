@@ -132,6 +132,32 @@
             <li>Built the benchmarking and profiling setup behind it, run across <span class="num">40+</span> open-source models.</li>
             <li>Modeled heterogeneous inference across on-chip accelerators for concurrent multi-agent workloads, including prefill/decode disaggregation and load-aware routing.</li>
           </ul>
+
+          <figure class="kv" id="kv" aria-labelledby="kv-title">
+            <div class="kv-head">
+              <h4 id="kv-title">Why concurrency runs into memory</h4>
+              <p class="kv-sub">Every running request keeps a KV cache on the GPU. Add requests and see what fits.</p>
+            </div>
+            <div class="kv-controls">
+              <label class="kv-slider">
+                <span>Concurrent requests <output id="kv-n-out" for="kv-n">8</output></span>
+                <input type="range" id="kv-n" min="1" max="32" value="8">
+              </label>
+              <label class="kv-toggle">
+                <input type="checkbox" id="kv-prefix">
+                <span>Share the common prompt prefix (prefix caching)</span>
+              </label>
+            </div>
+            <div class="kv-grid" id="kv-grid" role="img" aria-label="GPU memory blocks for the KV cache"></div>
+            <div class="kv-legend" aria-hidden="true">
+              <span><i class="sw sw-prefix"></i>Prompt prefix</span>
+              <span><i class="sw sw-req"></i>Request's own tokens</span>
+              <span><i class="sw sw-free"></i>Free</span>
+            </div>
+            <p class="kv-readout" id="kv-readout" aria-live="polite"></p>
+            <p class="kv-queue" id="kv-queue" aria-hidden="true"></p>
+            <figcaption>An illustration of the mechanism, not measured data. Real block counts depend on the model, context length and hardware.</figcaption>
+          </figure>
         </div>
 
         <div class="tabpanel" role="tabpanel" id="panel-amd24" aria-labelledby="tab-amd24" tabindex="0" hidden>
